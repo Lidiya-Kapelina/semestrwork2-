@@ -23,7 +23,16 @@ public class ShipPlacementGUI extends JFrame {
         add(panel, BorderLayout.CENTER);
 
         JButton readyButton = new JButton("Готов");
-        add(readyButton, BorderLayout.SOUTH);
+        readyButton.setPreferredSize(new Dimension(120, 55)); // выше, уже
+
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        buttonPanel.setBackground(getBackground()); // цвет как у основного фона
+        buttonPanel.add(readyButton);
+
+        add(buttonPanel, BorderLayout.SOUTH);
+
+
+
 
         readyButton.addActionListener(e -> {
             if (!panel.allPlaced()) {

@@ -14,7 +14,7 @@ public class LoginGUI extends JFrame {
     // Конструктор окна
     public LoginGUI() {
         setTitle("Морской Бой — Вход"); // Заголовок окна
-        setSize(700, 700);             // Размер окна в пикселях (ширина, высота)
+        setSize(500, 150);             // Размер окна в пикселях (ширина, высота)
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Закрытие программы при закрытии окна
         setLocationRelativeTo(null);   // Размещает окно по центру экрана
         setLayout(new BorderLayout()); // Задаем менеджер компоновки BorderLayout (север, юг, центр)
@@ -36,7 +36,14 @@ public class LoginGUI extends JFrame {
 
         // Создаем кнопку "Играть"
         playButton = new JButton("Играть");
-        add(playButton, BorderLayout.SOUTH); // Добавляем кнопку в нижнюю часть окна
+        playButton.setPreferredSize(new Dimension(160, 55)); // шире по высоте, уже по ширине
+
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        buttonPanel.setBackground(getBackground()); // тот же цвет, что у окна
+        buttonPanel.add(playButton);
+
+        add(buttonPanel, BorderLayout.SOUTH);
+        // Добавляем кнопку в нижнюю часть окна
 
         // Обработка нажатия кнопки
         playButton.addActionListener(event -> {
@@ -44,7 +51,7 @@ public class LoginGUI extends JFrame {
 
             if (!username.isEmpty()) {
                 try {
-                    Socket socket = new Socket("localhost", 1234);
+                    Socket socket = new Socket("localhost", 1223);
 
                     Client client = new Client(socket, username);
 

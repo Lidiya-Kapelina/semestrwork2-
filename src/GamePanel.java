@@ -137,31 +137,31 @@ public class GamePanel extends JPanel {
         drawOpponentField(g);
         drawStatus(g);
     }
-    
+
     private void drawGridLabels(Graphics g, int offsetX) {
         g.setFont(new Font("Arial", Font.BOLD, 14));
         g.setColor(Color.BLACK);
         FontMetrics fm = g.getFontMetrics();
-        
-        // Буквы по горизонтали (A-J)
+
+        // Буквы по горизонтали (A–J)
         String[] letters = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J"};
         for (int i = 0; i < GRID; i++) {
             int letterWidth = fm.stringWidth(letters[i]);
             int x = offsetX + i * CELL + (CELL - letterWidth) / 2;
             g.drawString(letters[i], x, TOP_OFFSET - 8);
         }
-        
-        // Цифры по вертикали (1-10) - только для левой сетки
-        if (offsetX == SIDE_OFFSET) {
-            for (int i = 0; i < GRID; i++) {
-                String number = String.valueOf(i + 1);
-                int numberWidth = fm.stringWidth(number);
-                int y = TOP_OFFSET + i * CELL + CELL / 2 + fm.getAscent() / 2 - 2;
-                g.drawString(number, offsetX - numberWidth - 8, y);
-            }
+
+        // Цифры по вертикали (1–10) — для ОБЕИХ карт
+        for (int i = 0; i < GRID; i++) {
+            String number = String.valueOf(i + 1);
+            int numberWidth = fm.stringWidth(number);
+            int y = TOP_OFFSET + i * CELL + CELL / 2 + fm.getAscent() / 2 - 2;
+
+            g.drawString(number, offsetX - numberWidth - 8, y);
         }
     }
-    
+
+
     private void drawFieldLabels(Graphics g) {
         g.setFont(new Font("Arial", Font.BOLD, 14));
         g.setColor(Color.BLACK);
@@ -171,13 +171,13 @@ public class GamePanel extends JPanel {
         String myLabel = "Ваша карта";
         int labelWidth = fm.stringWidth(myLabel);
         int myFieldCenterX = SIDE_OFFSET + (GRID * CELL) / 2;
-        g.drawString(myLabel, myFieldCenterX - labelWidth / 2, TOP_OFFSET - 10);
+        g.drawString(myLabel, myFieldCenterX - labelWidth / 2, 540);
         
         // Надпись "Карта противника" или "Карта противника [имя]" над правым полем
         String opponentLabel = opponentName != null ? "Карта противника " + opponentName : "Карта противника";
         int opponentLabelWidth = fm.stringWidth(opponentLabel);
         int opponentFieldCenterX = SIDE_OFFSET + GRID * CELL + GRID_SPACING + (GRID * CELL) / 2;
-        g.drawString(opponentLabel, opponentFieldCenterX - opponentLabelWidth / 2, TOP_OFFSET - 10);
+        g.drawString(opponentLabel, opponentFieldCenterX - opponentLabelWidth / 2, 540);
     }
 
     private void drawTitle(Graphics g) {
