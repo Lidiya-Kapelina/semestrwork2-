@@ -1,0 +1,67 @@
+import javax.swing.*; // Импортируем все компоненты Swing (JFrame, JButton, JTextField и т.д.)
+import java.awt.*;    // Импортируем классы для работы с компоновкой и цветами
+import java.awt.event.ActionEvent; // Импорт для обработки событий кнопки
+import java.awt.event.ActionListener; // Интерфейс для обработки кликов
+import java.io.IOException;
+import java.net.Socket;
+
+// Класс окна входа
+public class LoginGUI extends JFrame {
+    String username;
+    private JTextField nameField; // Поле для ввода имени пользователя
+    private JButton playButton;   // Кнопка "Играть"
+
+    // Конструктор окна
+    public LoginGUI() {
+        setTitle("Морской Бой — Вход"); // Заголовок окна
+        setSize(700, 700);             // Размер окна в пикселях (ширина, высота)
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Закрытие программы при закрытии окна
+        setLocationRelativeTo(null);   // Размещает окно по центру экрана
+        setLayout(new BorderLayout()); // Задаем менеджер компоновки BorderLayout (север, юг, центр)
+
+        // Создаем надпись "Введите ваше имя"
+        JLabel label = new JLabel("Введите ваше имя:");
+        label.setHorizontalAlignment(SwingConstants.CENTER); // Выравнивание по центру
+        add(label, BorderLayout.NORTH); // Добавляем надпись в верхнюю часть окна
+
+        // Создаем текстовое поле для ввода имени
+        nameField = new JTextField();
+        add(nameField, BorderLayout.CENTER); // Добавляем поле в центр окна
+
+        // Создаем кнопку "Играть"
+        playButton = new JButton("Играть");
+        add(playButton, BorderLayout.SOUTH); // Добавляем кнопку в нижнюю часть окна
+
+        // Обработка нажатия кнопки
+        playButton.addActionListener(event -> {
+            String username = nameField.getText().trim();
+
+            if (!username.isEmpty()) {
+                try {
+                    Socket socket = new Socket("localhost", 1234);
+
+                    Client client = new Client(socket, username);
+
+
+                    dispose(); // окно входа закрывается корректно
+
+                    SwingUtilities.invokeLater(() -> new ShipPlacementGUI(client));
+
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+
+                }
+            }
+        });
+
+
+        setVisible(true); // Делаем окно видимым
+    }
+
+    // Точка входа в программу
+    public static void main(String[] args) throws IOException {
+        SwingUtilities.invokeLater(LoginGUI::new); // Создаем окно входа в потоке Swing
+
+    }
+}
