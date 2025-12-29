@@ -11,7 +11,7 @@ public class GamePanel extends JPanel {
 
     private static final int CELL = 40;
     private static final int GRID = 10;
-    private static final int TOP_OFFSET = 60;  // Отступ сверху для заголовка
+    private static final int TOP_OFFSET = 120;  // Отступ сверху для заголовка (увеличен, чтобы надписи не накладывались)
     private static final int SIDE_OFFSET = 50;  // Отступ по бокам для симметрии (увеличен для цифр)
     private static final int GRID_SPACING = 40;  // Расстояние между двумя сетками
 
@@ -108,6 +108,13 @@ public class GamePanel extends JPanel {
                         "Победитель: " + winner,
                         "Игра окончена",
                         JOptionPane.INFORMATION_MESSAGE);
+                
+                // Закрываем приложение для клиента после окончания игры
+                Window window = SwingUtilities.getWindowAncestor(this);
+                if (window != null) {
+                    window.dispose();
+                }
+                System.exit(0);
             }
 
             repaint();
@@ -258,7 +265,7 @@ public class GamePanel extends JPanel {
     private void drawStatus(Graphics g) {
         g.setFont(new Font("Arial", Font.BOLD, 16));
         
-        // Статус хода под заголовком
+        // Статус хода под заголовком (опущен ниже, чтобы не накладывался)
         String text = switch (state) {
             case YOUR_TURN -> "Ваш ход";
             case OPPONENT_TURN -> "Ход противника";
@@ -269,7 +276,7 @@ public class GamePanel extends JPanel {
         FontMetrics fm = g.getFontMetrics();
         int textWidth = fm.stringWidth(text);
         int centerX = getWidth() / 2;
-        g.drawString(text, centerX - textWidth / 2, 55);
+        g.drawString(text, centerX - textWidth / 2, 85); // Опущено ниже
 
     }
 }

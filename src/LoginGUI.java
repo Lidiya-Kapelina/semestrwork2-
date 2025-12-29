@@ -24,9 +24,15 @@ public class LoginGUI extends JFrame {
         label.setHorizontalAlignment(SwingConstants.CENTER); // Выравнивание по центру
         add(label, BorderLayout.NORTH); // Добавляем надпись в верхнюю часть окна
 
-        // Создаем текстовое поле для ввода имени
+        // Создаем текстовое поле для ввода имени с ограниченным размером
         nameField = new JTextField();
-        add(nameField, BorderLayout.CENTER); // Добавляем поле в центр окна
+        nameField.setPreferredSize(new Dimension(300, 30)); // Ограничиваем размер поля
+        nameField.setMaximumSize(new Dimension(300, 30));
+        
+        // Создаем панель для центрирования поля ввода
+        JPanel centerPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        centerPanel.add(nameField);
+        add(centerPanel, BorderLayout.CENTER); // Добавляем панель в центр окна
 
         // Создаем кнопку "Играть"
         playButton = new JButton("Играть");
